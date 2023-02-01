@@ -16,14 +16,14 @@ func main() {
 	useFile2 := flag.String("new", "", "parse file new")
 
 	flag.Parse()
-	var old, new reader.Recipe
+	var old, nev reader.Recipe
 	if *useFile1 != "" && *useFile2 != "" {
 		old = getRecipe(*useFile1)
-		new = getRecipe(*useFile2)
+		nev = getRecipe(*useFile2)
 	} else {
 		fmt.Println("Use '--old' and '--new' flag to compare")
 	}
-	compareRecipe(old, new)
+	compareRecipe(old, nev)
 }
 
 func getRecipe(filename string) reader.Recipe {
@@ -35,7 +35,7 @@ func getRecipe(filename string) reader.Recipe {
 		myStruct := new(reader.JSONReader)
 		recipe = parseFile(myStruct, filename)
 	} else {
-		fmt.Fprint(os.Stderr, "error: invalid file extension\n")
+		fmt.Println("Error: invalid file extension!")
 		os.Exit(1)
 	}
 	return recipe
@@ -56,15 +56,15 @@ func parseFile(readers reader.DBReader, filename string) reader.Recipe {
 	return recipe
 }
 
-func compareRecipe(old reader.Recipe, new reader.Recipe) {
-	diffLog, _ := diff.Diff(old, new)
+func compareRecipe(old reader.Recipe, nev reader.Recipe) {
+	diffLog, _ := diff.Diff(old, nev)
 	for _, change := range diffLog {
 		switch change.Type {
 		case diff.CREATE:
-			checkAdd(change, new)
+			checkAdd(change, nev)
 			continue
 		case diff.UPDATE:
-			checkUpd(change, new)
+			checkUpd(change, nev)
 			continue
 		case diff.DELETE:
 			checkDel(change, old)
@@ -126,7 +126,7 @@ func checkDel(change diff.Change, recipe reader.Recipe) {
 func getCake(path []string, recipe reader.Recipe) string {
 	cake, err := strconv.Atoi(path[1])
 	if err != nil {
-		fmt.Errorf("Cake is not valid")
+		fmt.Println("Cake is not valid")
 		os.Exit(1)
 	}
 	return recipe.Cake[cake].Name
@@ -135,12 +135,12 @@ func getCake(path []string, recipe reader.Recipe) string {
 func getIngredient(path []string, recipe reader.Recipe) string {
 	cake, err := strconv.Atoi(path[1])
 	if err != nil {
-		fmt.Errorf("Undefined cake!")
+		fmt.Println("Undefined cake!")
 		os.Exit(1)
 	}
 	ingredient, err := strconv.Atoi(path[3])
 	if err != nil {
-		fmt.Errorf("Undefined cake!")
+		fmt.Println("Undefined cake!")
 		os.Exit(1)
 	}
 	return recipe.Cake[cake].Ingredients[ingredient].ItemName

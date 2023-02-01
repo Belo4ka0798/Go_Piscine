@@ -21,13 +21,17 @@ func (r *JSONReader) ReadDB(content []byte) Recipe {
 func (r *JSONReader) WriteDB(recipe Recipe) {
 	fd, err := os.Create("file.xml")
 	if err != nil {
-		fmt.Fprint(os.Stderr, err)
+		fmt.Println("File not Create")
 		os.Exit(1)
 	}
 	out, err := xml.MarshalIndent(recipe, "", "	")
 	if err != nil {
-		fmt.Fprint(os.Stderr, err)
+		fmt.Println("File not Marshal")
 		os.Exit(1)
 	}
-	fmt.Fprint(fd, string(out))
+	i, err := fmt.Fprint(fd, string(out))
+	if err != nil {
+		fmt.Printf("Can not write %d", i)
+		os.Exit(1)
+	}
 }

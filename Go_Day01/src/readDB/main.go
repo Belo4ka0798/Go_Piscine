@@ -28,7 +28,7 @@ func Start(filename string) {
 		myStruct := new(reader.JSONReader)
 		parseFile(myStruct, filename)
 	} else {
-		fmt.Fprint(os.Stderr, "error: invalid file extension\n")
+		fmt.Println("error: invalid file extension")
 		os.Exit(1)
 	}
 }

@@ -15,11 +15,11 @@ func main() {
 	flag.Parse()
 	if *useFile1 != "" && *useFile2 != "" {
 		old := openFile(*useFile1)
-		new := openFile(*useFile2)
-		for _, v := range compareFile(new, old) {
+		nev := openFile(*useFile2)
+		for _, v := range compareFile(nev, old) {
 			fmt.Println("ADDED", v)
 		}
-		for _, v := range compareFile(old, new) {
+		for _, v := range compareFile(old, nev) {
 			fmt.Println("REMOVED", v)
 		}
 	} else {
@@ -37,6 +37,12 @@ func openFile(filename string) []string {
 		fmt.Printf("Error open file!")
 		os.Exit(1)
 	}
+	defer func(fd *os.File) {
+		err := fd.Close()
+		if err != nil {
+			fmt.Println("File not close!")
+		}
+	}(fd)
 	scanner := bufio.NewScanner(fd)
 	scanner.Split(bufio.ScanLines)
 	var txtlines []string
@@ -44,7 +50,6 @@ func openFile(filename string) []string {
 	for scanner.Scan() {
 		txtlines = append(txtlines, scanner.Text())
 	}
-	fd.Close()
 	return txtlines
 }
 
