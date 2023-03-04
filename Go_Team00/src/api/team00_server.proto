@@ -1,0 +1,20 @@
+syntax = "proto3";
+package pb;
+
+option go_package = "./api;serv";
+
+import "google/protobuf/timestamp.proto";
+
+service DeviceService {
+  rpc DeviceInfo(RequestEmpty) returns (stream ResponseMess) {};
+}
+
+message ResponseMess {
+  string sessionID = 1;
+  double frequency = 2;
+  google.protobuf.Timestamp utc = 3;
+}
+
+message RequestEmpty {
+
+}

@@ -1,0 +1,16 @@
+{{template "base" .}}
+
+{{define "title"}}Заметка #{{.Article.ID}}{{end}}
+
+{{define "main"}}
+<div class='snippet'>
+    <div class='metadata'>
+        <strong>{{.Article.Title}}</strong>
+        <span>#{{.Article.ID}}</span>
+    </div>
+    <pre><code>{{.Article.Content}}</code></pre>
+    <div class='metadata'>
+        <time>Создан: {{.Article.Created}}</time>
+    </div>
+</div>
+{{end}}

@@ -1,0 +1,31 @@
+{{template "base" .}}
+
+{{define "title"}}Admin Panel{{end}}
+
+{{define "main"}}
+    <h2>Admin Panel</h2>
+        <h3>Создание Статьи</h3>
+        <form id="create" name="create" action="" method="post" class="mt-4">
+            <table>
+            <tr>
+                <td><label for="login">Title</label></td>
+                <td><input type="text" id="title" name="title" autocomplete="on"></td>
+            </tr>
+            <tr>
+                <td><label for="password">Content</label></td>
+                <td><input type="text" id="content" name="content" autocomplete="on"></td>
+            </tr>
+            </table>
+            <button type="submit" name="submitBtnCreate">Create</button>
+        </form>
+        <h3>Удаление статьи</h3>
+        <form id="remove" name="remove" action="" method="post" class="mt-4">
+            <table>
+            <tr>
+                <td><label for="login">ID</label></td>
+                <td><input type="text" id="id" name="id" autocomplete="on"></td>
+            </tr>
+            </table>
+            <button type="submit" name="submitBtnRemove">Remove</button>
+        </form>
+{{end}}

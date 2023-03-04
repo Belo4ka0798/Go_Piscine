@@ -1,0 +1,20 @@
+{{template "base" .}}
+ 
+{{define "title"}}Авторизация{{end}}
+ 
+{{define "main"}}
+    <h2>Авторизация</h2>
+        <form id="loginForm" name="loginForm" action="/admin" method="post" class="mt-4">
+            <table>
+            <tr>
+                <td><label for="login">Логин</label></td>
+                <td><label for="password">Пароль</label></td>
+            </tr>
+            <tr>
+                <td><input type="login" id="login" name="login" autocomplete="on"></td>
+                <td><input type="password" id="password" name="password" autocomplete="on"></td>
+            </tr>
+            </table>
+            <button type="submit" name="submitBtn">Войти</button>
+        </form>
+{{end}}
